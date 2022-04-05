@@ -1,4 +1,4 @@
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, doc, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "./firebase/config";
 
 const usuario = {
@@ -15,3 +15,21 @@ const usuario = {
         console.log( docRef );
     })
     .catch( e => console.log( 'error', e ) ); */
+
+// ACTUALIZAR
+// MYSQL: UPDATE USUARIOS SET ACTIVO = FALSE WHERE.....
+
+/* const usuariosRef = doc( collection( db, 'usuarios' ), '3Ge1lzlDw3IpsRFaewyi' );
+
+updateDoc( usuariosRef, {
+    activo: false
+});
+ */
+
+// Este UPDATE elimina todos los campos del documento y solo deja los mandados. Resetea el documento.
+/* const usuariosRef = doc( collection( db, 'usuarios' ), '3Ge1lzlDw3IpsRFaewyi' );
+
+setDoc( usuariosRef, {
+    activo: false
+});
+ */
