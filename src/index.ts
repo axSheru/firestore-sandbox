@@ -1,4 +1,4 @@
-import { addDoc, collection, deleteDoc, doc, setDoc, updateDoc } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, onSnapshot, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "./firebase/config";
 
 const usuario = {
@@ -8,6 +8,7 @@ const usuario = {
 };
 
 const usuarioRef = doc( collection( db, 'usuarios' ), '3Ge1lzlDw3IpsRFaewyi' );
+const usuariosRef = collection( db, 'usuarios' );
 
 // INSERTAR
 // MYSQL: INSERT INTO
@@ -21,17 +22,13 @@ const usuarioRef = doc( collection( db, 'usuarios' ), '3Ge1lzlDw3IpsRFaewyi' );
 // ACTUALIZAR
 // MYSQL: UPDATE USUARIOS SET ACTIVO = FALSE WHERE.....
 
-/* const usuariosRef = doc( collection( db, 'usuarios' ), '3Ge1lzlDw3IpsRFaewyi' );
-
-updateDoc( usuariosRef, {
+/* updateDoc( usuarioRef, {
     activo: false
 });
  */
 
 // Este UPDATE elimina todos los campos del documento y solo deja los mandados. Resetea el documento.
-/* const usuariosRef = doc( collection( db, 'usuarios' ), '3Ge1lzlDw3IpsRFaewyi' );
-
-setDoc( usuariosRef, {
+/* setDoc( usuarioRef, {
     activo: false
 });
  */
@@ -39,6 +36,25 @@ setDoc( usuariosRef, {
 // DELETE
 // DELETE FROM USUARIOS WHERE....
 
-/* deleteDoc( usuarioRef )
+/* deleteDoc( usuariosRef )
     .then( () => console.log( 'borrado' ) )
     .catch( e => console.log( 'error', e ) ); */
+
+// SELECT
+// SELECT * FROM ....
+
+onSnapshot( usuariosRef, snap => {
+
+    const usuarios: any[] = [];
+
+    snap.forEach( hijo => {
+
+        usuarios.push({
+            id: hijo.id,
+            ...hijo.data()
+        });
+    });
+
+    console.log( usuarios );
+});
+
