@@ -1,5 +1,6 @@
-import { addDoc, collection, deleteDoc, doc, onSnapshot, setDoc, updateDoc } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDoc, onSnapshot, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "./firebase/config";
+import { retornaDocumentos } from "./helpers/mostrar-documentos";
 
 const usuario = {
     nombre: 'Pedro',
@@ -9,6 +10,7 @@ const usuario = {
 
 const usuarioRef = doc( collection( db, 'usuarios' ), '3Ge1lzlDw3IpsRFaewyi' );
 const usuariosRef = collection( db, 'usuarios' );
+const usuariosDocRef = doc( db, 'usuarios' );
 
 // INSERTAR
 // MYSQL: INSERT INTO
@@ -43,18 +45,17 @@ const usuariosRef = collection( db, 'usuarios' );
 // SELECT
 // SELECT * FROM ....
 
-onSnapshot( usuariosRef, snap => {
+// onSnapshot vuelve a consultar la información cada que esta cambia.
 
-    const usuarios: any[] = [];
+/* onSnapshot( usuariosRef, snap => {
 
-    snap.forEach( hijo => {
+    retornaDocumentos( snap );
+    
+}); */
 
-        usuarios.push({
-            id: hijo.id,
-            ...hijo.data()
-        });
-    });
+// Es lo mismo que arriba.
 
-    console.log( usuarios );
-});
+onSnapshot( usuariosRef, retornaDocumentos );
+
+
 
