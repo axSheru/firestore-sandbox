@@ -1,4 +1,4 @@
-import { addDoc, collection, deleteDoc, doc, getDoc, onSnapshot, setDoc, updateDoc } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, onSnapshot, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "./firebase/config";
 import { retornaDocumentos } from "./helpers/mostrar-documentos";
 
@@ -10,7 +10,6 @@ const usuario = {
 
 const usuarioRef = doc( collection( db, 'usuarios' ), '3Ge1lzlDw3IpsRFaewyi' );
 const usuariosRef = collection( db, 'usuarios' );
-const usuariosDocRef = doc( db, 'usuarios' );
 
 // INSERTAR
 // MYSQL: INSERT INTO
@@ -55,7 +54,8 @@ const usuariosDocRef = doc( db, 'usuarios' );
 
 // Es lo mismo que arriba.
 
-onSnapshot( usuariosRef, retornaDocumentos );
+// onSnapshot( usuariosRef, retornaDocumentos );
 
-
+/* getDocs( usuariosRef )
+    .then( retornaDocumentos ); */
 
