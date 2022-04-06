@@ -1,11 +1,12 @@
-import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, onSnapshot, query, setDoc, updateDoc, where } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, onSnapshot, orderBy, query, setDoc, updateDoc, where } from "firebase/firestore";
 import { db } from "./firebase/config";
 import { retornaDocumentos } from "./helpers/mostrar-documentos";
 
 const usuario = {
-    nombre: 'Pedro',
-    activo: true,
-    fechaNacimiento: 0
+    nombre: 'Iván',
+    activo: false,
+    fechaNacimiento: 0,
+    salario: 1200
 };
 
 const usuarioRef = doc( collection( db, 'usuarios' ), '3Ge1lzlDw3IpsRFaewyi' );
@@ -60,7 +61,7 @@ const usuariosRef = collection( db, 'usuarios' );
     .then( retornaDocumentos ); */
 
 // QUERYS CON WHERE.
-    
+/*     
 // SELECT * FROM usuarios WHERE activo = true
 const queryUsuariosActivos = query( usuariosRef, where( 'activo', '==', true ) );
 
@@ -74,5 +75,23 @@ const querySnapshot = getDocs( querySalario1800Activo );
 
 querySnapshot
     .then( retornaDocumentos )
-    .catch( console.log );
+    .catch( console.log ); */
+
+
+// ORDER BY
+/* 
+// SELECT * FROM usuarios ORDER BY nombre ASC
+const queryOrderByNombreAsc = query( usuariosRef, orderBy( 'nombre' ) );
+
+// SELECT * FROM usuarios ORDER BY nombre DESC
+const queryOrderByNombreDesc = query( usuariosRef, orderBy( 'nombre', 'desc' ) );
+
+// SELECT * FROM usuarios ORDER BY nombre ASC, salario ASC
+const queryOrderByNombreAscSalarioAsc = query( usuariosRef, orderBy( 'nombre' ), orderBy( 'salario' ) );
+
+const querySnapshot = getDocs( queryOrderByNombreAscSalarioAsc );
+
+querySnapshot
+    .then( retornaDocumentos )
+    .catch( console.log ); */
 
