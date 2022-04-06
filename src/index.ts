@@ -1,4 +1,4 @@
-import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, onSnapshot, orderBy, query, setDoc, updateDoc, where } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, endBefore, getDoc, getDocs, limit, onSnapshot, orderBy, query, setDoc, startAfter, updateDoc, where } from "firebase/firestore";
 import { db } from "./firebase/config";
 import { retornaDocumentos } from "./helpers/mostrar-documentos";
 
@@ -94,4 +94,77 @@ const querySnapshot = getDocs( queryOrderByNombreAscSalarioAsc );
 querySnapshot
     .then( retornaDocumentos )
     .catch( console.log ); */
+
+
+// LIMIT
+
+// SELECT * FROM usuarios LIMIT 3
+/* const queryLimit3 = query( usuariosRef, limit( 3 ) );
+
+const querySnapshot = getDocs( queryLimit3 );
+
+querySnapshot
+    .then( retornaDocumentos )
+    .catch( console.log ); */
+
+
+// Paginación.
+
+// Next page.
+const btnNext = document.createElement( 'button' );
+btnNext.innerText = 'Next Page';
+document.body.append( btnNext );
+
+
+let firstDocument: any = null;
+let lastDocument: any = null;
+
+
+btnNext.addEventListener( 'click', () => {
+
+    console.log( 'click' );
+
+    const queryPagination = query( usuariosRef, orderBy( 'nombre' ), limit( 2 ), startAfter( lastDocument ) );
+
+    const querySnapshot = getDocs( queryPagination );
+
+    querySnapshot
+        .then( snap => {
+
+            firstDocument = snap.docs[ 0 ] || null ;
+            lastDocument = snap.docs[ snap.docs.length - 1 ] || null ;
+            retornaDocumentos( snap );
+
+        })
+        .catch( console.log );
+
+});
+
+// Last page.
+const btnPrevious = document.createElement( 'button' );
+btnPrevious.innerText = 'Previous Page';
+document.body.append( btnPrevious );
+
+
+btnPrevious.addEventListener( 'click', () => {
+
+    console.log( 'click' );
+
+    const queryPagination = query( usuariosRef, orderBy( 'nombre' ), limit( 2 ), endBefore( firstDocument ) );
+
+    const querySnapshot = getDocs( queryPagination );
+
+    querySnapshot
+        .then( snap => {
+
+            firstDocument = snap.docs[ 0 ] || null ;
+            lastDocument = snap.docs[ snap.docs.length - 1 ] || null ;
+            retornaDocumentos( snap );
+
+        })
+        .catch( console.log );
+
+});
+
+btnNext.click();
 
